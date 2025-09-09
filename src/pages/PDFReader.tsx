@@ -31,6 +31,7 @@ const PDFReader = () => {
   };
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
+    console.log("PDF loaded successfully with", numPages, "pages");
     setNumPages(numPages);
     setLoading(false);
     toast.success(`PDF loaded successfully! ${numPages} pages`);
@@ -40,6 +41,10 @@ const PDFReader = () => {
     console.error('Error loading PDF:', error);
     setLoading(false);
     toast.error("Failed to load PDF. Please check the URL.");
+  };
+
+  const onDocumentLoadStart = () => {
+    console.log("Document loading started");
   };
 
   const goToPrevPage = () => {
@@ -144,6 +149,7 @@ const PDFReader = () => {
                     file={pdfFile}
                     onLoadSuccess={onDocumentLoadSuccess}
                     onLoadError={onDocumentLoadError}
+                    onLoadStart={onDocumentLoadStart}
                     loading={<div className="text-muted-foreground">Loading PDF...</div>}
                   >
                     <Page
