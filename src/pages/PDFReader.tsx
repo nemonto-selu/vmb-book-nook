@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +20,7 @@ const PDFReader = () => {
   const [pdfFile, setPdfFile] = useState<string | null>(null);
 
   const handleLoadPDF = () => {
+    console.log("handleLoadPDF called with URL:", pdfUrl);
     if (!pdfUrl.trim()) {
       toast.error("Please enter a valid PDF URL");
       return;
@@ -26,6 +29,7 @@ const PDFReader = () => {
     setPdfFile(pdfUrl);
     setPageNumber(1);
     toast.success("Loading PDF...");
+    console.log("PDF file set to:", pdfUrl);
   };
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
