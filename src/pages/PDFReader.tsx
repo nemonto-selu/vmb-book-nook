@@ -4,7 +4,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
+import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Download } from "lucide-react";
 import { toast } from "sonner";
 
 // Set up the worker
@@ -45,6 +45,21 @@ const PDFReader = () => {
     setPdfFile(sample);
     setPageNumber(1);
     toast.success("Loading sample PDF...");
+  };
+
+  const downloadPDF = () => {
+    if (!pdfFile) {
+      toast.error("No PDF loaded to download");
+      return;
+    }
+    
+    const link = document.createElement('a');
+    link.href = pdfFile;
+    link.download = `document-${Date.now()}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("PDF download started");
   };
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -112,6 +127,15 @@ const PDFReader = () => {
               </Button>
               <Button variant="outline" onClick={loadSamplePDF} aria-label="Load sample PDF">
                 Use Sample PDF
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={downloadPDF} 
+                disabled={!pdfFile}
+                aria-label="Download current PDF"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Download
               </Button>
             </div>
           </CardContent>
