@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as React from "react";
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,11 @@ const PDFReader = () => {
   const [scale, setScale] = useState<number>(1.0);
   const [loading, setLoading] = useState<boolean>(false);
   const [pdfFile, setPdfFile] = useState<string | null>(null);
+
+  // Debug when pdfFile changes
+  React.useEffect(() => {
+    console.log("pdfFile state changed to:", pdfFile);
+  }, [pdfFile]);
 
   const handleLoadPDF = () => {
     console.log("handleLoadPDF called with URL:", pdfUrl);
@@ -40,7 +46,8 @@ const PDFReader = () => {
   const onDocumentLoadError = (error: Error) => {
     console.error('Error loading PDF:', error);
     setLoading(false);
-    toast.error("Failed to load PDF. Please check the URL.");
+    // Don't reset pdfFile on error - keep it for retry
+    toast.error("Failed to load PDF. Please check the URL and try again.");
   };
 
   const onDocumentLoadStart = () => {
