@@ -149,39 +149,34 @@ const PDFReader = () => {
         <Card>
           <CardContent className="p-8">
             <div className="min-h-[600px] bg-muted/30 rounded-lg flex items-center justify-center overflow-auto">
-              {(() => {
-                console.log("Render state - loading:", loading, "pdfFile:", pdfFile);
-                if (loading) {
-                  return <p className="text-muted-foreground text-lg">Loading PDF...</p>;
-                } else if (pdfFile) {
-                  console.log("About to render Document component with file:", pdfFile);
-                  return (
-                    <div className="pdf-container">
-                      <Document
-                        file={pdfFile}
-                        onLoadSuccess={onDocumentLoadSuccess}
-                        onLoadError={onDocumentLoadError}
-                        onLoadStart={onDocumentLoadStart}
-                        loading={<div className="text-muted-foreground">Loading PDF...</div>}
-                        error={<div className="text-red-500">Failed to load PDF</div>}
-                      >
-                        <Page
-                          pageNumber={pageNumber}
-                          scale={scale}
-                          renderTextLayer={false}
-                          renderAnnotationLayer={false}
-                        />
-                      </Document>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <p className="text-muted-foreground text-lg">
-                      Enter a PDF URL above to start viewing
-                    </p>
-                  );
-                }
-              })()}
+              {pdfFile ? (
+                <div className="relative w-full flex justify-center">
+                  {loading && (
+                    <p className="absolute top-4 text-muted-foreground">Loading PDF...</p>
+                  )}
+                  <div className="pdf-container">
+                    <Document
+                      file={pdfFile}
+                      onLoadSuccess={onDocumentLoadSuccess}
+                      onLoadError={onDocumentLoadError}
+                      onLoadStart={onDocumentLoadStart}
+                      loading={<div className="text-muted-foreground">Loading PDF...</div>}
+                      error={<div className="text-destructive">Failed to load PDF</div>}
+                    >
+                      <Page
+                        pageNumber={pageNumber}
+                        scale={scale}
+                        renderTextLayer={false}
+                        renderAnnotationLayer={false}
+                      />
+                    </Document>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-muted-foreground text-lg">
+                  Enter a PDF URL above to start viewing
+                </p>
+              )}
             </div>
           </CardContent>
         </Card>
