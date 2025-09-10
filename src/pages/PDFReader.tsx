@@ -18,6 +18,7 @@ const PDFReader = () => {
   const [scale, setScale] = useState<number>(1.0);
   const [loading, setLoading] = useState<boolean>(false);
   const [pdfFile, setPdfFile] = useState<string | null>(null);
+  const [jumpPageInput, setJumpPageInput] = useState<string>("");
 
   // Debug when pdfFile changes
   React.useEffect(() => {
@@ -97,6 +98,17 @@ const PDFReader = () => {
     setScale(scale => Math.max(0.5, scale - 0.2));
   };
 
+  const jumpToPage = () => {
+    const page = parseInt(jumpPageInput);
+    if (isNaN(page) || page < 1 || page > numPages) {
+      toast.error(`Please enter a valid page number (1-${numPages})`);
+      return;
+    }
+    setPageNumber(page);
+    setJumpPageInput("");
+    toast.success(`Jumped to page ${page}`);
+  };
+
   return (
     <div className="min-h-screen bg-background pt-20 px-4">
       <div className="max-w-6xl mx-auto">
@@ -166,6 +178,25 @@ const PDFReader = () => {
                   >
                     Next
                     <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="number"
+                    placeholder="Page"
+                    value={jumpPageInput}
+                    onChange={(e) => setJumpPageInput(e.target.value)}
+                    className="w-20 h-8"
+                    min="1"
+                    max={numPages}
+                  />
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={jumpToPage}
+                    disabled={!jumpPageInput.trim() || numPages === 0}
+                  >
+                    Go
                   </Button>
                 </div>
                 <div className="flex items-center gap-2">
