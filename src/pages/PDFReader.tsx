@@ -114,18 +114,15 @@ const PDFReader = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-serif font-bold text-primary mb-4">
-            PDF Reader
+            VMB Reading Room
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Upload or enter a PDF URL to read documents online
+            Read our books online
           </p>
         </div>
 
         <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Load PDF Document</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pt-6">
             <div className="flex gap-4">
               <Input
                 type="url"
@@ -136,15 +133,6 @@ const PDFReader = () => {
               />
               <Button onClick={handleLoadPDF} className="bg-primary hover:bg-primary/90">
                 Load PDF
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={downloadPDF} 
-                disabled={!pdfFile}
-                aria-label="Download current PDF"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download
               </Button>
             </div>
           </CardContent>
