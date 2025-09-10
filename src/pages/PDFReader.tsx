@@ -137,9 +137,6 @@ const PDFReader = () => {
               <Button onClick={handleLoadPDF} className="bg-primary hover:bg-primary/90">
                 Load PDF
               </Button>
-              <Button variant="outline" onClick={loadSamplePDF} aria-label="Load sample PDF">
-                Use Sample PDF
-              </Button>
               <Button 
                 variant="outline" 
                 onClick={downloadPDF} 
@@ -157,6 +154,7 @@ const PDFReader = () => {
           <Card className="mb-4">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-4">
+                {/* Left side: Navigation and page jump */}
                 <div className="flex items-center gap-2">
                   <Button
                     variant="outline"
@@ -179,14 +177,12 @@ const PDFReader = () => {
                     Next
                     <ChevronRight className="h-4 w-4" />
                   </Button>
-                </div>
-                <div className="flex items-center gap-2">
                   <Input
                     type="number"
                     placeholder="Page"
                     value={jumpPageInput}
                     onChange={(e) => setJumpPageInput(e.target.value)}
-                    className="w-20 h-8"
+                    className="w-20 h-8 ml-4"
                     min="1"
                     max={numPages}
                   />
@@ -199,6 +195,8 @@ const PDFReader = () => {
                     Go
                   </Button>
                 </div>
+                
+                {/* Right side: Zoom and download */}
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm" onClick={zoomOut}>
                     <ZoomOut className="h-4 w-4" />
@@ -208,6 +206,16 @@ const PDFReader = () => {
                   </span>
                   <Button variant="outline" size="sm" onClick={zoomIn}>
                     <ZoomIn className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={downloadPDF} 
+                    disabled={!pdfFile}
+                    aria-label="Download current PDF"
+                    className="ml-4"
+                  >
+                    <Download className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
