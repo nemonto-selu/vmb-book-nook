@@ -15,7 +15,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 const PDFReader = () => {
   const [searchParams] = useSearchParams();
   const bookId = searchParams.get('bookId');
-  const autoFillUrl = bookId ? `${bookId}.pdf` : "";
+  const autoFillUrl = bookId ? `/${bookId}.pdf` : "";
   
   const [pdfUrl, setPdfUrl] = useState(autoFillUrl);
   const [numPages, setNumPages] = useState<number>(0);
