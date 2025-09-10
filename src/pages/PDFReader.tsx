@@ -129,7 +129,7 @@ const PDFReader = () => {
           </p>
         </div>
 
-        <Card className="mb-8">
+        <Card className="mb-8 invisible">
           <CardContent className="space-y-4 pt-6">
             <div className="flex gap-4">
               <Input
