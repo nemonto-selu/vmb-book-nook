@@ -84,6 +84,17 @@ export const books: Book[] = [
     genre: "Literary Fiction",
     featured: false,
   },
+    {
+    id: "nobts-style-guide",
+    title: "NOBTS Style Guide",
+    author: "Eddie Campbell",
+    cover: fliesImg,
+    description: "NOBTS/ LEAVELL COLLEGE MANUAL OF FORM & S TYLE",
+    volume: "Educational Edition",
+    year: 2019,
+    genre: "Writing",
+    featured: false,
+  },
 ];
 
 export const getFeaturedBooks = () => books.filter(book => book.featured);
