@@ -48,6 +48,13 @@ const BookDetails = () => {
                 className="w-full h-full object-cover"
               />
             </div>
+            <div className="max-w-md mx-auto mt-6">
+              <Link to="/pdfreader">
+                <Button className="w-full" size="lg">
+                  Read
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* Book Information */}
