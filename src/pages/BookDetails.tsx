@@ -49,7 +49,7 @@ const BookDetails = () => {
               />
             </div>
             <div className="max-w-md mx-auto mt-6">
-              <Link to="/pdfreader">
+              <Link to={`/pdfreader?bookId=${bookId}`}>
                 <Button className="w-full" size="lg">
                   Read
                 </Button>

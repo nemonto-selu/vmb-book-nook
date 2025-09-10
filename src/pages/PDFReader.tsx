@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as React from "react";
+import { useSearchParams } from "react-router-dom";
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,18 +13,25 @@ import { toast } from "sonner";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const PDFReader = () => {
-  const [pdfUrl, setPdfUrl] = useState("");
+  const [searchParams] = useSearchParams();
+  const bookId = searchParams.get('bookId');
+  const autoFillUrl = bookId ? `/book/${bookId}.pdf` : "";
+  
+  const [pdfUrl, setPdfUrl] = useState(autoFillUrl);
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1.0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [pdfFile, setPdfFile] = useState<string | null>(null);
+  const [pdfFile, setPdfFile] = useState<string | null>(autoFillUrl || null);
   const [jumpPageInput, setJumpPageInput] = useState<string>("");
 
-  // Debug when pdfFile changes
+  // Auto-load PDF if bookId is provided
   React.useEffect(() => {
-    console.log("pdfFile state changed to:", pdfFile);
-  }, [pdfFile]);
+    if (autoFillUrl) {
+      setLoading(true);
+      toast.success("Loading book PDF...");
+    }
+  }, [autoFillUrl]);
 
   const handleLoadPDF = () => {
     console.log("handleLoadPDF called with URL:", pdfUrl);
@@ -130,6 +138,7 @@ const PDFReader = () => {
                 value={pdfUrl}
                 onChange={(e) => setPdfUrl(e.target.value)}
                 className="flex-1"
+                readOnly={!!bookId}
               />
               <Button onClick={handleLoadPDF} className="bg-primary hover:bg-primary/90">
                 Load PDF
