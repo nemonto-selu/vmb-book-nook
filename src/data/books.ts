@@ -4,6 +4,7 @@ import orwellImg from "@/assets/book-1984.jpg";
 import prideImg from "@/assets/book-pride.jpg";
 import catcherImg from "@/assets/book-catcher.jpg";
 import fliesImg from "@/assets/book-flies.jpg";
+import nobtsImg from "@/assets/book-nobts.jpg"
 
 export interface Book {
   id: string;
@@ -18,17 +19,6 @@ export interface Book {
 }
 
 export const books: Book[] = [
-  {
-    id: "nobts-style-guide",
-    title: "NOBTS Style Guide",
-    author: "Eddie Campbell",
-    cover: fliesImg,
-    description: "NOBTS/ LEAVELL COLLEGE MANUAL OF FORM & S TYLE",
-    volume: "Educational Edition",
-    year: 2019,
-    genre: "Writing",
-    featured: false,
-  },
   {
     id: "the-great-gatsby",
     title: "The Great Gatsby",
@@ -95,7 +85,17 @@ export const books: Book[] = [
     genre: "Literary Fiction",
     featured: false,
   },
-
+    {
+    id: "nobts-style-guide",
+    title: "NOBTS Style Guide",
+    author: "Eddie Campbell",
+    cover: fliesImg,
+    description: "NOBTS/ LEAVELL COLLEGE MANUAL OF FORM & S TYLE",
+    volume: "Educational Edition",
+    year: 2019,
+    genre: "Writing",
+    featured: false,
+  },
 ];
 
 export const getFeaturedBooks = () => books.filter(book => book.featured);
