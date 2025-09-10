@@ -37,6 +37,16 @@ const PDFReader = () => {
     console.log("PDF file set to:", pdfUrl);
   };
 
+  const loadSamplePDF = () => {
+    const sample = "/sample.pdf";
+    console.log("Loading sample PDF:", sample);
+    setPdfUrl(sample);
+    setLoading(true);
+    setPdfFile(sample);
+    setPageNumber(1);
+    toast.success("Loading sample PDF...");
+  };
+
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     console.log("PDF loaded successfully with", numPages, "pages");
     setNumPages(numPages);
@@ -44,11 +54,12 @@ const PDFReader = () => {
     toast.success(`PDF loaded successfully! ${numPages} pages`);
   };
 
-  const onDocumentLoadError = (error: Error) => {
+  const onDocumentLoadError = (error: any) => {
     console.error('Error loading PDF:', error);
     setLoading(false);
-    // Don't reset pdfFile on error - keep it for retry
-    toast.error("Failed to load PDF. Please check the URL and try again.");
+    // Keep pdfFile for retry/inspection and surface detailed message
+    const msg = typeof error === 'string' ? error : error?.message || 'Unknown error';
+    toast.error(`Failed to load PDF: ${msg}`);
   };
 
   const onDocumentLoadStart = () => {
@@ -98,6 +109,9 @@ const PDFReader = () => {
               />
               <Button onClick={handleLoadPDF} className="bg-primary hover:bg-primary/90">
                 Load PDF
+              </Button>
+              <Button variant="outline" onClick={loadSamplePDF} aria-label="Load sample PDF">
+                Use Sample PDF
               </Button>
             </div>
           </CardContent>
