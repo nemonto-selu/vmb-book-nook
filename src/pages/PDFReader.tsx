@@ -8,6 +8,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Download } from "lucide-react";
 import { toast } from "sonner";
 
+// Polyfill for Promise.withResolvers (ES2024 feature)
+if (typeof (Promise as any).withResolvers === 'undefined') {
+  (Promise as any).withResolvers = function () {
+    let resolve: any, reject: any;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return { promise, resolve, reject };
+  };
+}
+
 // Set up the worker
 // Set up the worker to match the API version
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
