@@ -20,6 +20,17 @@ if (typeof (Promise as any).withResolvers === 'undefined') {
   };
 }
 
+// Polyfill for URL.parse (ES2024 feature)
+if (typeof (URL as any).parse === 'undefined') {
+  (URL as any).parse = function (url: string, base?: string | URL) {
+    try {
+      return new URL(url, base);
+    } catch {
+      return null;
+    }
+  };
+}
+
 // Set up the worker
 // Set up the worker to match the API version
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
